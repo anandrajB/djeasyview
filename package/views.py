@@ -8,7 +8,7 @@ from rest_framework.serializers import BaseSerializer
 
 # ---------------------------------------------------------------------------------------------------
 #
-#   Note: Authentication and authorization are required to access these endpoints.
+#   Note: Basic crud mixin for access points
 #
 # ---------------------------------------------------------------------------------------------------
 
