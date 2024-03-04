@@ -1,3 +1,16 @@
+Metadata-Version: 2.1
+Name: djeasyview
+Version: 1.0.4
+Author: Anand Raj
+Author-email: anand98.ar@gmail.com
+License: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Education
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
 # Dj Easy view CRUD mixins
 
 Makes your CRUD's even more smaller and customizable with dj easy views . 
