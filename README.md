@@ -30,6 +30,8 @@ class YourView(DjeasyListCreateView):
     serializer_class = YourModelSerializer
     queryset = YourModel
     permission_classes = [IsAuthenticated]
+    enable_cache = True
+    cache_duration = 60
 ```
 
 
@@ -53,4 +55,6 @@ class YourView(DjeasyRetrieveUpdateApiView):
     serializer_class = YourModelSerializer
     queryset = YourModel
     permission_classes = [IsAuthenticated]
+    enable_cache = True
+    cache_duration = 60
 ```
