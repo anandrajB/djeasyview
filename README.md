@@ -1,9 +1,8 @@
 # Dj Easy view CRUD mixins
 
-Makes your CRUD's even more smaller and customizable with dj easy views . 
+Makes your CRUD's even more smaller and customizable with dj easy views .
 
 ## Installation
-
 
 ```
 pip install djeasyview
@@ -11,7 +10,7 @@ pip install djeasyview
 
 ## Usage
 
-### List and create
+### GET and POST api's
 
 This mixin provides generic implementations for listing and creating resources.
 
@@ -34,13 +33,9 @@ class YourView(DjeasyListCreateView):
     cache_duration = 60
 ```
 
-
-
-
-### Retrive , Update , Delete
+### GET , PUT , PATCH , DELETE api's
 
 This mixin provides generic implementations for Retrive , updating and deleting resources.
-
 
 ```python
 from djeasyview import DjeasyRetrieveUpdateApiView
@@ -58,3 +53,25 @@ class YourView(DjeasyRetrieveUpdateApiView):
     enable_cache = True
     cache_duration = 60
 ```
+
+
+
+
+#### Customization:
+
+
+1. customize your get_queryset
+
+    ```python
+        def get_queryset(self):
+            super().get_queryset()
+            return YourModel.objects.filter(**filter_conditions)
+    ```
+
+2. customize your responses
+    ```python
+        from rest_framework.response import Response
+        def get_response(self, serializer_klass, queryset):
+            super().get_response(serializer_klass, self.get_queryset())
+            return Response(serializer_klass(queryset).data)
+    ```

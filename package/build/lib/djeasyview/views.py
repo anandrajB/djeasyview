@@ -1,5 +1,6 @@
-from typing import Dict, Optional, Type, Union
+from typing import Dict, List, Optional, Type, Union
 
+from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Model
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -15,8 +16,16 @@ class BaseMixin:
     model: Type[Model]
     context: Optional[Dict[str, any]] = None
     serializer_save: Optional[Dict[str, any]] = None
+    select_related: Optional[List[str]] = None
+    prefetch_related: Optional[List[str]] = None
     enable_cache: Optional[bool] = False
     cache_duration: Optional[int] = None
+
+    def __init__(self) -> None:
+        if self.enable_cache and not self.cache_duration:
+            raise ImproperlyConfigured(
+                "if enable cache is set to True you must define the cache duration , example 60 * 60 "
+            )
 
     @method_decorator(cache_page(cache_duration))
     @method_decorator(vary_on_cookie)
@@ -38,6 +47,14 @@ class DjeasyListCreateAPI(BaseMixin, ListCreateAPIView):
 
     def get_create_serializer(self, data: Dict[str, any]) -> BaseSerializer:
         return self.create_serializer_class(data=data)
+
+    def get_queryset(self) -> Model:
+        queryset = super().get_queryset()
+        if self.select_related:
+            queryset = queryset.select_related(*self.select_related)
+        if self.prefetch_related:
+            queryset = queryset.prefetch_related(*self.prefetch_related)
+        return queryset
 
     def get_list_serializer(self, instance: Model) -> BaseSerializer:
         return (
@@ -81,7 +98,14 @@ class DjeasyRetrieveUpdateAPI(BaseMixin, RetrieveUpdateDestroyAPIView):
         return self.update_serializer_class(instance, data=data)
 
     def get_queryset(self, pk: Union[int, str]) -> Model:
-        return get_object_or_404(self.model, pk=pk)
+        queryset = super().get_queryset()
+        if self.select_related:
+            queryset = self.model.objects.select_related(*self.select_related)
+        if self.prefetch_related:
+            queryset = self.model.objects.prefetch_related(*self.prefetch_related)
+        else:
+            queryset = self.model
+        return get_object_or_404(queryset, pk=pk)
 
     def retrieve(
         self, request: Request, pk: Union[int, str] = None, *args, **kwargs
