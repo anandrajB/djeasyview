@@ -28,9 +28,12 @@ class YourView(DjeasyListCreateView):
     create_serializer_class = YourModelSerializer
     serializer_class = YourModelSerializer
     queryset = YourModel
+    select_related = ['field1', 'field2']
+    prefetch_related = ['field1', 'field2']
     permission_classes = [IsAuthenticated]
     enable_cache = True
     cache_duration = 60
+    order_by = ['field1' , 'field2']
 ```
 
 ### GET , PUT , PATCH , DELETE api's
@@ -54,24 +57,20 @@ class YourView(DjeasyRetrieveUpdateApiView):
     cache_duration = 60
 ```
 
-
-
-
 #### Customization:
-
 
 1. customize your get_queryset
 
-    ```python
-        def get_queryset(self):
-            super().get_queryset()
-            return YourModel.objects.filter(**filter_conditions)
-    ```
-
+   ```python
+       def get_queryset(self):
+           super().get_queryset()
+           return YourModel.objects.filter(**filter_conditions)
+   ```
 2. customize your responses
-    ```python
-        from rest_framework.response import Response
-        def get_response(self, serializer_klass, queryset):
-            super().get_response(serializer_klass, self.get_queryset())
-            return Response(serializer_klass(queryset).data)
-    ```
+
+   ```python
+       from rest_framework.response import Response
+       def get_response(self, serializer_klass, queryset):
+           super().get_response(serializer_klass, self.get_queryset())
+           return Response(serializer_klass(queryset).data)
+   ```

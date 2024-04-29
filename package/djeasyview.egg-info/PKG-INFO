@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: djeasyview
-Version: 1.0.7
+Version: 1.0.8
 Author: Anand Raj
 Author-email: anand98.ar@gmail.com
 License: UNKNOWN
@@ -41,6 +41,8 @@ class YourView(DjeasyListCreateView):
     create_serializer_class = YourModelSerializer
     serializer_class = YourModelSerializer
     queryset = YourModel
+    select_related = ['key1' , 'key2']
+    prefetch_related = ['key1' , 'key2']
     permission_classes = [IsAuthenticated]
     enable_cache = True
     cache_duration = 60
@@ -62,6 +64,8 @@ class YourView(DjeasyRetrieveUpdateApiView):
     create_serializer_class = YourModelSerializer
     serializer_class = YourModelSerializer
     queryset = YourModel
+    select_related = ['key1' , 'key2']
+    prefetch_related = ['key1' , 'key2']
     permission_classes = [IsAuthenticated]
     enable_cache = True
     cache_duration = 60
