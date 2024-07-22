@@ -21,6 +21,7 @@ class BaseMixin:
     enable_cache: Optional[bool] = False
     cache_duration: Optional[int] = None
     order_by: Optional[List[str]] = None
+    query_params: Optional[Dict] = None
 
     def __init__(self) -> None:
         if self.enable_cache and not self.cache_duration:
@@ -55,6 +56,18 @@ class DjeasyListCreateAPI(BaseMixin, ListCreateAPIView):
             queryset = queryset.select_related(*self.select_related)
         if self.prefetch_related:
             queryset = queryset.prefetch_related(*self.prefetch_related)
+        if self.query_params:
+            reverse_base = {v: k for k, v in self.query_params.items()}
+            queryset = queryset.filter(
+                **{
+                    reverse_base[param_key]: param_value[0]
+                    for param_key, param_value in dict(
+                        self.request.query_params
+                    ).items()
+                    if param_key in reverse_base
+                }
+            )
+
         return queryset.order_by(*self.order_by) if self.order_by else queryset
 
     def get_list_serializer(self, instance: Model) -> BaseSerializer:
