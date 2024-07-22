@@ -33,8 +33,15 @@ class YourView(DjeasyListCreateView):
     permission_classes = [IsAuthenticated]
     enable_cache = True
     cache_duration = 60
+    query_params = {
+        "name": "name",
+        "related_field__id": "related_id",
+        "related_field__name": "related_name",
+    }
 ```
-
+```
+e.g., localhost:8000/view/?name="anand"&related_id=1&related_name="anandraj"
+```
 ### GET , PUT , PATCH , DELETE api's
 
 This mixin provides generic implementations for Retrive , updating and deleting resources.
