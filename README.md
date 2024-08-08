@@ -38,10 +38,20 @@ class YourView(DjeasyListCreateView):
         "related_field__id": "related_id",
         "related_field__name": "related_name",
     }
+    pagination = True
 ```
+
+
+- with query params
 ```
 e.g., localhost:8000/view/?name="anand"&related_id=1&related_name="anandraj"
 ```
+- with pagination
+```
+e.g., localhost:8000/view/?page_size=10&page_number=1"
+```
+ 
+
 ### GET , PUT , PATCH , DELETE api's
 
 This mixin provides generic implementations for Retrive , updating and deleting resources.

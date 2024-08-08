@@ -10,6 +10,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import BaseSerializer
+from .utils import paginated_views
 
 
 class BaseMixin:
@@ -22,6 +23,7 @@ class BaseMixin:
     cache_duration: Optional[int] = None
     order_by: Optional[List[str]] = None
     query_params: Optional[Dict] = None
+    pagination: Optional[bool] = False
 
     def __init__(self) -> None:
         if self.enable_cache and not self.cache_duration:
@@ -80,6 +82,17 @@ class DjeasyListCreateAPI(BaseMixin, ListCreateAPIView):
     def list(self, request: Request, *args, **kwargs) -> Response:
         if self.enable_cache:
             return self.cached_get(request, self.get_list_serializer, *args, **kwargs)
+        if self.pagination:
+            page_size: str = self.request.query_params.get("page_size", None)
+            page_number: str = self.request.query_params.get("page_number", None)
+            if page_size and page_number:
+                queryset = self.get_queryset()
+                return paginated_views(
+                    page_size,
+                    page_number,
+                    self.get_list_serializer(queryset).data,
+                    queryset,
+                )
         return self.get_response(self.get_list_serializer, self.get_queryset())
 
     def post(self, request: Request, *args, **kwargs) -> Response:

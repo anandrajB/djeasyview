@@ -5,7 +5,9 @@ readme.md
 setup.cfg
 setup.py
 djeasyview/__init__.py
+djeasyview/exceptions.py
 djeasyview/response.py
+djeasyview/utils.py
 djeasyview/views.py
 djeasyview.egg-info/PKG-INFO
 djeasyview.egg-info/SOURCES.txt
