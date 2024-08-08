@@ -11,6 +11,9 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/anandrajB/djeasyview
+    - theme: alt
+      text: View on Pip
+      link: https://pypi.org/project/djeasyview/
 
 # Features section
 features:
@@ -19,10 +22,10 @@ features:
     details: works from django 3.2 to 5
   - icon: 🎉
     title: Dynamic query params
-    details: enable query params with related name filtering
+    details: enables query params with related name filtering
   - icon: 🔥
     title: Simple and minimal, always
-    details: Don't DRY 
+    details: Dont Repeat Yourself 
   - icon: 🎀
     title: Stylish and cool
     details: Minimises LOC indeed
