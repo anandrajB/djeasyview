@@ -7,6 +7,7 @@ setup.py
 djeasyview/__init__.py
 djeasyview/exceptions.py
 djeasyview/response.py
+djeasyview/serializers.py
 djeasyview/utils.py
 djeasyview/views.py
 djeasyview.egg-info/PKG-INFO
