@@ -17,8 +17,8 @@ class DjeasyModelSerializer(serializers.ModelSerializer):
         fields="__all__",
         many=True,
         related_fields=None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ):
         return cls(
             model=model_name,

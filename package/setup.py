@@ -10,12 +10,13 @@ def readme():
 # updated
 setup(
     name="djeasyview",
-    version="1.0.14",
+    version="1.0.15",
     long_description=readme(),
     long_description_content_type="text/markdown",
     author="Anand Raj",
     author_email="anand98.ar@gmail.com",
     python_requires=">=3.8",
+    license="MIT",
     packages=find_packages(),
     install_requires=["django", "djangorestframework"],
 )
