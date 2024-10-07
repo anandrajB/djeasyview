@@ -106,7 +106,10 @@ class YourView(DjeasyRetrieveUpdateApiView):
 
 ### For creating new serializer instance 
 ```python
-DjeasyModelSerializer.options(
+
+from djeasyview.serializers import DjeasyModelSerializer
+
+serializer = DjeasyModelSerializer.options(
     model_name=UserModel,
     queryset=UserModel.objects.all(),
     fields="__all__",
