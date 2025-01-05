@@ -90,7 +90,7 @@ class DjeasyListCreateAPI(BaseMixin, ListCreateAPIView):
                 return paginated_views(
                     page_size,
                     page_number,
-                    self.get_list_serializer(queryset).data,
+                    self.get_list_serializer,
                     queryset,
                 )
         return self.get_response(self.get_list_serializer, self.get_queryset())
